@@ -1,0 +1,97 @@
+{% extends 'back_web/base.html' %}
+{% load static %}
+{% block css %}
+    {{ block.super }}
+    <style>
+        .dataStatistic{width:400px;height:200px;border:1px solid #ccc;
+            margin:0 auto;margin:10px;overflow:hidden}
+        #cylindrical{width:400px;height:200px;margin-top:-15px}
+        #line{width:400px;height:200px;margin-top:-15px}
+        #pie{width:400px;height:200px;margin-top:-15px}
+</style>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+	(function($){
+		$(window).load(function(){
+
+			$("a[rel='load-content']").click(function(e){
+				e.preventDefault();
+				var url=$(this).attr("href");
+				$.get(url,function(data){
+					$(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+					//scroll-to appended content
+					$(".content").mCustomScrollbar("scrollTo","h2:last");
+				});
+			});
+
+			$(".content").delegate("a[href='top']","click",function(e){
+				e.preventDefault();
+				$(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
+			});
+
+		});
+	})(jQuery);
+</script>
+{% endblock %}
+
+{% block content %}
+    <section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">运费管理</h2>
+       <a href="{% url 'back_web:add_freight' %}" class="fr top_rt_btn add_icon">添加区域运费</a>
+      </div>
+      <section class="mtb">
+       <select class="select">
+        <option>下拉菜单</option>
+       </select>
+       <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..."/>
+       <input type="button" value="查询" class="group_btn"/>
+      </section>
+      <table class="table">
+       <tr>
+           <th>序号</th>
+           <th>区域</th>
+           <th>运费</th>
+           <th>操作</th>
+       </tr>
+          <!-- 处理分组信息 -->
+          {% for freight in freight_list %}
+       <tr>
+       <td class="center">{{ forloop.counter }}</td>
+        <td class="center">{{ freight.address }}</td>
+        <td class="center">{{ freight.cost }}</td>
+        <td class="center">
+         <a href="{% url 'back_web:edit_static' %}?freight_id={{ freight.id }}" title="编辑" class="link_icon">&#101;</a>
+         <a href="{% url 'back_web:del_static' %}?freight_id={{ freight.id }}" title="删除" class="link_icon">&#100;</a>
+        </td>
+       </tr>
+          {% endfor %}
+          <!-- 处理结束 -->
+      </table>
+      <aside class="paging">
+          <!-- 处理页面 -->
+          <a href="{% url 'back_web:show_freight' %}">首页</a>
+          {% if freight_list.has_previous %}
+              <a href="{% url 'back_web:show_freight' %}?page={{ freight_list.previous_page_number }}">上一页</a>
+          {% endif %}
+          {% for tmp in freight_list.paginator.page_range %}
+              {% ifequal tmp page %}
+                <a href="{% url 'back_web:show_freight' %}?page={{ tmp }}"
+                    style="color: red;background-color: white">{{ tmp }}</a>
+                  {% else %}
+                  <a href="{% url 'back_web:show_freight' %}?page={{ tmp }}"
+                    >{{ tmp }}</a>
+              {% endifequal %}
+          {% endfor %}
+          {% if freight_list.has_next %}
+              <a href="{% url 'back_web:show_freight' %}?page={{ freight_list.next_page_number }}">下一页</a>
+          {% endif %}
+       <a href="{% url 'back_web:show_freight' %}?page={{ freight_list.paginator.num_pages }}">尾页</a>
+      </aside>
+ </div>
+</section>
+{% endblock %}

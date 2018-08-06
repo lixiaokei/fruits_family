@@ -1,0 +1,68 @@
+{% extends 'fruits_shop/base.html' %}
+{% block title %}
+天天生鲜-用户中心
+{% endblock %}
+{% block css %}
+{{ block.super }}
+    <style>
+        #operating {
+            display: inline-block;
+            font-family: Arial;
+            font-size: 16px;
+        }
+        .title2 {
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+	<div class="search_bar clearfix">
+		<a href={% url 'fruits_shop:index' %}index.html" class="logo fl"><img src="/media/{{ logo.img }}"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>		
+	</div>
+
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="user_center_info.html" class="active">· 个人信息</a></li>
+				<li><a href="user_center_order.html">· 全部订单</a></li>
+				<li><a href="{% url 'user:show_address' %}">· 收货地址</a></li>
+			</ul>
+		</div>
+		<div class="right_content clearfix">
+				<div class="info_con clearfix">
+				    <h3 class="common_title2">基本信息</h3>
+                    <ul class="user_info_list">
+                        <li><span>用户名：</span>{{ user.username }}</li>
+                        <li><span>注册邮箱：</span>{{ user.email }}</li>
+                    </ul>
+                    <div>
+                        <h3 class="common_title2 title2">收货地址</h3>
+
+                    </div>
+                    {% if address_list %}
+
+                    {% for address in address_list %}
+                    <ul class="user_info_list">
+                        <li><span>姓名：</span>{{ address.name}}</li>
+                        <li><span>联系方式：</span>{{ address.tel_phone }}</li>
+                        <li><span>联系地址：</span>{{ address.area }}{{ address.address }}</li>
+                    </ul>
+                    {% endfor %}
+                        {% else %}
+                        <p style="color: red; font-size: 16px;text-align: center">您还没有收货地址，
+                            点击<a href="#" id="operating">新地址</a>快速添加。</p>
+                    {% endif %}
+				</div>
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+{{ block.super }}
+
+{% endblock %}
