@@ -29,7 +29,7 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="user_center_info.html" class="active">· 个人信息</a></li>
+				<li><a href="{% url 'user:user_center_info' %}" class="active">· 个人信息</a></li>
 				<li><a href="user_center_order.html">· 全部订单</a></li>
 				<li><a href="{% url 'user:show_address' %}">· 收货地址</a></li>
 			</ul>
@@ -51,7 +51,7 @@
                     <ul class="user_info_list">
                         <li><span>姓名：</span>{{ address.name}}</li>
                         <li><span>联系方式：</span>{{ address.tel_phone }}</li>
-                        <li><span>联系地址：</span>{{ address.area }}{{ address.address }}</li>
+                        <li><span>联系地址：</span>{{ address.area.area }}{{ address.address }}</li>
                     </ul>
                     {% endfor %}
                         {% else %}

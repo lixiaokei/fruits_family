@@ -96,6 +96,7 @@ class FreightModel(models.Model):
         db_table = 'tb_freight'
 
 
+# 收货地址
 class AddressModel(models.Model):
 
     user = models.ForeignKey(UserModel)     # 关联用户
@@ -106,6 +107,15 @@ class AddressModel(models.Model):
 
     class Meta:
         db_table = 'tb_user_address'
+
+    # 编辑方法
+    def edit(self, area_id, address, name, tel_phone):
+        self.area_id = area_id if (area_id != self.area_id and area_id not in ('', None)) else self.area_id
+        self.address = address if (address != self.address and address not in ('', None)) else self.address
+        self.name = name if (name != self.name and name not in ('', None)) else self.name
+        self.tel_phone = tel_phone if (tel_phone != self.tel_phone and tel_phone not in ('', None)) \
+            else self.tel_phone
+        self.save()
 
 
 # 订单
