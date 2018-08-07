@@ -36,7 +36,8 @@ class UserMiddleware(MiddlewareMixin):
                  '/fruits_shop/total_price/', '/fruits_shop/change_num/',
                  '/fruits_shop/cart_delete/', '/fruits_shop/change_status/',
                  '/user/user_center_info/', '/user/show_address/',
-                 '/user/add_address/', '/user/edit_address']
+                 '/user/add_address/', '/user/edit_address',
+                 '/fruits_shop/make_order/', '/fruits_shop/order_pay/']
         path2 = ['/user/user_center_info/', '/user/show_address/',
                  '/user/add_address/', '/user/edit_address/']
         now_time = datetime.datetime.now()

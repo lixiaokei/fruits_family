@@ -1,4 +1,5 @@
 {% extends 'fruits_shop/base.html' %}
+{% load lk_filter %}
 {% block title %}
     天天生鲜-用户中心
 {% endblock %}
@@ -10,10 +11,6 @@
 	<div class="search_bar clearfix">
 		<a href="{% url 'fruits_shop:index' %}" class="logo fl"><img src="/media/static_file/logo.png"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
-		<div class="search_con fr">
-			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
-			<input type="button" class="input_btn fr" name="" value="搜索">
-		</div>		
 	</div>
 
 	<div class="main_con clearfix">
@@ -37,6 +34,7 @@
                         <div class="form_group">
                             <label>区域省份：</label>
                             <select name="area" style="width: 100px;margin-top: 10px;padding: 0 2%">
+                                {% get_areas as areas %}
                                 {% for area in areas %}
                                 <option value="{{ area.id }}" style="text-align: center">{{ area.area }}</option>
                                 {% endfor %}

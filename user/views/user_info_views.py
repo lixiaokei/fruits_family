@@ -46,9 +46,7 @@ def edit_address(request):
 # 添加收货地址
 def add_address(request):
     if request.method == 'GET':
-        areas = FreightModel.objects.all()
-        data = {'areas': areas}
-        return render(request, 'user/user_center_add_addr.html', data)
+        return render(request, 'user/user_center_add_addr.html')
 
     if request.method == 'POST':
         area, address = request.POST.get('area'), request.POST.get('address')

@@ -125,7 +125,7 @@ class OrderModel(models.Model):
     # 0 代表已下单，但是未付款， 1 已付款未发货  2 已付款，已发货.....
     o_status = models.IntegerField(default=0)  # 状态
     o_create = models.DateTimeField(auto_now_add=True)  # 创建时间
-    freight = models.ForeignKey(FreightModel)   # 运费
+    address = models.ForeignKey(AddressModel, null=True)   # 收货地址
     total_price = models.CharField(max_length=10)   # 订单金额
 
     class Meta:

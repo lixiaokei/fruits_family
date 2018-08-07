@@ -1,0 +1,75 @@
+{% extends 'fruits_shop/base.html' %}
+{% load static %}
+{% load lk_filter %}
+{% block title %}
+天天生鲜-确认支付
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="search_bar clearfix">
+    {% csrf_token %}
+    {% logo as img %}
+		<a href="{% url 'fruits_shop:index' %}" class="logo fl"><img src="/media/{{ img }}"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;确认支付</div>
+	</div>
+    <h3 class="common_title">支付方式</h3>
+	<div class="common_list_con clearfix">
+		<div class="pay_style_con clearfix">
+			<input type="radio" name="pay_style" checked value="1">
+			<label class="cash">货到付款</label>
+			<input type="radio" name="pay_style" value="2">
+			<label class="weixin">微信支付</label>
+			<input type="radio" name="pay_style" value="3">
+			<label class="zhifubao"></label>
+			<input type="radio" name="pay_style" value="4">
+			<label class="bank">银行卡支付</label>
+		</div>
+	</div>
+    <div class="order_submit clearfix">
+		<a href="javascript:void(0);" id="order_btn" class="{{ order_id }}">提交订单</a>
+	</div>
+    <div class="popup_con">
+		<div class="popup">
+			<p>订单提交成功！</p>
+		</div>
+
+		<div class="mask"></div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'fruits_shop/js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript">
+		$('#order_btn').click(function(evt) {
+		    var evt = $(evt.target)
+			localStorage.setItem('order_finish',2);
+
+			$('.popup_con').fadeIn('fast', function() {
+
+				setTimeout(function(){
+					$('.popup_con').fadeOut('fast',function(){
+					    $.ajax({
+                            url:'/fruits_shop/order_pay/',
+                            headers:{"X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val()},
+                            data:{'order_id':evt.attr('class')},
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.code==200) {
+                                window.location.href = '/fruits_shop/index/';
+                                }
+                            },
+                            error: function () {}
+                        });
+					});
+				},3000)
+
+			});
+		});
+	</script>
+{% endblock %}
