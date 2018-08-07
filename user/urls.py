@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^show_address/', views.show_address, name='show_address'),
     url(r'^add_address/', views.add_address, name='add_address'),
     url(r'^edit_address/', views.edit_address, name='edit_address'),
-    url(r'^del_address/', views.del_address, name='del_address')
+    url(r'^del_address/', views.del_address, name='del_address'),
+    url(r'^user_order_info/',views.user_order_info, name='user_order_info'),
+
 
 ]

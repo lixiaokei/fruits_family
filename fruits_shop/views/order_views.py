@@ -30,23 +30,27 @@ def make_order(request):
             carts = CartModel.objects.filter(user=user, is_select=True)
             if carts:
                 address_id = request.POST.get('address_id')
-                address = AddressModel.objects.filter(pk=address_id).first()
+                address_obj = AddressModel.objects.filter(pk=address_id).first()
+                cost = float(address_obj.area.cost)
+                address = address_obj.area.area + address_obj.address
                 o_num = order_num()
-                order = OrderModel.objects.create(user=user, o_num=o_num, address=address)
+                order = OrderModel.objects.create(user=user, o_num=o_num, address=address,
+                                                  cost=cost, name=address_obj.name,
+                                                  tel_phone=address_obj.tel_phone)
                 total = 0
                 for info in carts:
                     total += float(info.good.price) * info.count
                     OrderGoodsModel.objects.create(order=order, goods=info.good,
                                                    goods_num=info.count)
                 carts.delete()
-                order.total_price = '%.2f' % (total + float(address.area.cost))
+                order.total_price = '%.2f' % (total + cost)
                 order.save()
-                return HttpResponseRedirect(reverse('fruits_shop:order_pay', args={'order_id': order.id}))
+                return HttpResponseRedirect(reverse('fruits_shop:order_pay') + '?order_id=' + str(order.id))
 
 
 # 确认支付
 def order_pay(request):
-    if request.method =='GET':
+    if request.method == 'GET':
         order_id = request.GET.get('order_id')
         return render(request, 'fruits_shop/order_pay.html', {'order_id': order_id})
 

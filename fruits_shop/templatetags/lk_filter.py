@@ -10,6 +10,12 @@ def sum_tag(value, arg):
     return float(value) * int(arg)
 
 
+# 浮点加法过滤器
+@register.filter(name='sum')
+def get_sum(value, arg):
+    return float(value) + float(arg)
+
+
 # 获取地址列表
 @register.assignment_tag(name='logo')
 def get_logo():

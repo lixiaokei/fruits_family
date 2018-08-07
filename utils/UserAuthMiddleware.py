@@ -37,9 +37,11 @@ class UserMiddleware(MiddlewareMixin):
                  '/fruits_shop/cart_delete/', '/fruits_shop/change_status/',
                  '/user/user_center_info/', '/user/show_address/',
                  '/user/add_address/', '/user/edit_address',
-                 '/fruits_shop/make_order/', '/fruits_shop/order_pay/']
+                 '/fruits_shop/make_order/', '/fruits_shop/order_pay/',
+                 '/user/user_order_info/']
         path2 = ['/user/user_center_info/', '/user/show_address/',
-                 '/user/add_address/', '/user/edit_address/']
+                 '/user/add_address/', '/user/edit_address/',
+                 '/user/user_order_info/']
         now_time = datetime.datetime.now()
         if request.path in path1:
             session_value = request.COOKIES.get('session_id')
@@ -55,11 +57,11 @@ class UserMiddleware(MiddlewareMixin):
                         session.delete()
                         return None
                 else:
-                    if request.path in '/user/user_center_info/':
+                    if request.path in path2:
                         return HttpResponseRedirect(reverse('user:login'))
                     return None
             else:
-                if request.path in '/user/user_center_info/':
+                if request.path in path2:
                     return HttpResponseRedirect(reverse('user:login'))
                 return None
         return None

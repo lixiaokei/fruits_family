@@ -17,7 +17,7 @@ def index(request):
         data = {
             'good_list': good_list,
             'page': page,
-            'num': len(good_list),
+            'num': len(goods),
         }
         return render(request, 'back_web/index.html', data)
 

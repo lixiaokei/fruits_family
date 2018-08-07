@@ -22,20 +22,23 @@
 				<div class="login_btn fl">
 
                     {% if not user.username %}
-					<a href="{% url 'user:login' %}">登录</a>
+					    <a href="{% url 'user:login' %}">登录</a>
+                        <span>|</span>
+					    <a href="{% url 'user:register' %}">注册</a>
                         {% else %}
                         {{ user.username }}
                     {% endif %}
-					<span>|</span>
-					<a href="{% url 'user:register' %}">注册</a>
+
 				</div>
 				<div class="user_link fl">
+                    <span>|</span>
+					<a href="{% url 'fruits_shop:index' %}">首页</a>
 					<span>|</span>
 					<a href="{% url 'user:user_center_info' %}">用户中心</a>
 					<span>|</span>
 					<a href="{% url 'fruits_shop:cart' %}">我的购物车</a>
 					<span>|</span>
-					<a href="user_center_order.html">我的订单</a>
+					<a href="{% url 'user:user_order_info' %}">我的订单</a>
 				</div>
 			</div>
 		</div>

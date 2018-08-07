@@ -64,7 +64,7 @@
 			<div class="total_goods_count">共<em>2</em>件商品，总金额<b>
                 {{ total_price|floatformat:2 }}元</b></div>
 			<div class="transit">运费：<b>{{ cost|floatformat:2 }}元</b></div>
-			<div class="total_pay">实付款：<b>{{ total_price|add:cost|floatformat:2 }}元</b></div>
+			<div class="total_pay">实付款：<b>{{ total_price|sum:cost|floatformat:2 }}元</b></div>
 		</div>
 	</div>
 

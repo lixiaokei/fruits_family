@@ -20,13 +20,13 @@ class GroupModel(models.Model):
 
 # 商品
 class GoodsModel(models.Model):
-    name = models.CharField(max_length=100)
-    img = models.ImageField(upload_to='goods')
-    group = models.ForeignKey(GroupModel)
-    price = models.CharField( max_length=32, default=0.00)
-    intro = models.CharField(max_length=255, null=True)
-    format = models.CharField(max_length=32, null=True)
-    description = models.TextField(null=True)
+    name = models.CharField(max_length=100)     # 名称
+    img = models.ImageField(upload_to='goods')  # 图片
+    group = models.ForeignKey(GroupModel)       # 关联分组外键
+    price = models.CharField( max_length=32, default=0.00)  # 单价
+    intro = models.CharField(max_length=255, null=True)     # 简述
+    format = models.CharField(max_length=32, null=True)     # 规格
+    description = models.TextField(null=True)               # 详情
 
     class Meta:
         db_table = 'tb_fruits_good'
@@ -125,7 +125,10 @@ class OrderModel(models.Model):
     # 0 代表已下单，但是未付款， 1 已付款未发货  2 已付款，已发货.....
     o_status = models.IntegerField(default=0)  # 状态
     o_create = models.DateTimeField(auto_now_add=True)  # 创建时间
-    address = models.ForeignKey(AddressModel, null=True)   # 收货地址
+    address = models.CharField(max_length=255, default='')   # 收货地址
+    cost = models.FloatField(default=10.0)                  # 运费
+    name = models.CharField(max_length=20, default='')                  # 收货人姓名
+    tel_phone = models.CharField(max_length=13, default='')  # 收货人电话
     total_price = models.CharField(max_length=10)   # 订单金额
 
     class Meta:
