@@ -39,6 +39,8 @@
 					<a href="{% url 'fruits_shop:cart' %}">我的购物车</a>
 					<span>|</span>
 					<a href="{% url 'user:user_order_info' %}">我的订单</a>
+                    <span>|</span>
+					<a href="{% url 'user:logout' %}">注销</a>
 				</div>
 			</div>
 		</div>
@@ -64,6 +66,7 @@
         <script type="text/javascript" src="{% static 'fruits_shop/js/jquery-1.12.4.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'fruits_shop/js/jquery-ui.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'fruits_shop/js/slide.js' %}"></script>
+        <script type="text/javascript" src="{% static 'fruits_shop/js/cart.js' %}"></script>
     {% endblock %}
 </body>
 </html>

@@ -10,15 +10,8 @@
     <script type="text/javascript">
     $(function () {
         // 请求当前用户的购物车信息
-        get_cart_count()
+        get_cart_count(show)
     });
-    function get_cart_count() {
-        $.get('/fruits_shop/get_cart_count/', function (json) {
-            if (json.code == 200){
-                $('#show_count').html(json.count);
-            }
-        });
-    }
 </script>
 {% endblock %}
 {% block content %}
@@ -30,7 +23,7 @@
 		</div>
 		<div class="guest_cart fr">
 			<a href="{% url 'fruits_shop:cart' %}" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count"></div>
+			<div class="goods_count fl" id="show_count">0</div>
 		</div>
 	</div>
 

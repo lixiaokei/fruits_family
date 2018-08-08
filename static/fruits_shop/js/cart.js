@@ -1,39 +1,4 @@
-$(function () {
-    Subtotal();
-    total_price();
-    // 加减点击事件
-    $('.change').click(function (e) {
-        e.preventDefault();
-        var evt = $(e.target);
-        var good_id = evt.parent().attr('name');
-        var value = evt.parent().find('input').val();
-        if (evt.text() == '+'){
-            var change_type = 1
-        }else if (evt.text() == '-'){
-            var change_type = 0
-        }
-        var data = {'good_id': good_id, 'value': value, 'change_type': change_type};
-        $.get('/fruits_shop/change_num/', data, function (data) {
-            if (data.code == 200){
-                evt.parent().parent().nextAll('.subtotal').text(data.total + '元');
-                evt.parent().find('input').val(data.value);
-                total_price();
-                }
-        })
-    });
-    // 勾选按钮点击事件
-    $('.cart_list_td>.col01>input').click(function (evt) {
-        var check_status = $(evt.target).prop('checked');
-        var cart_id = $(evt.target).attr('name');
-        change_status(cart_id, check_status, '', false);
-    })
-    // 全选按钮点击事件
-    $('.settlements>.col01>input').click(function (evt) {
-        var all_value = $(evt.target).prop('checked');
-        var all_change_status = true;
-        change_status('', '', all_value, all_change_status)
-    })
-});
+
 // 改变状态ajax
 function change_status(cart_id='', change_status='', all_value='', all_change_status=false) {
     $.ajax({
@@ -91,3 +56,17 @@ function cart_delete(cart_id) {
             }
     });
 };
+
+ // 把ajax请求的相应传入另一个函数中，由另一个函数处理展示
+function show(data) {
+    if (data.count){
+        $('#show_count').html(data.count);
+    }
+}
+function get_cart_count(func) {
+    $.get('/fruits_shop/get_cart_count/', function (json) {
+        if (json.code == 200){
+            func(json)
+        }
+    });
+}

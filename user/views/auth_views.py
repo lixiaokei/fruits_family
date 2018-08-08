@@ -61,3 +61,14 @@ def login(request):
         else:
             msg['msg'], msg['code'] = 302, '用户名密码错误，请重新登陆'
         return render(request, 'user/login.html', msg)
+
+
+# 注销登陆
+def logout(request):
+    if request.method == 'GET':
+        user = request.user
+        session_id = request.COOKIES.get('session_id')
+        if user.id:
+            session_list = UserTicketModel.objects.filter(user=user, session_id=session_id)
+            session_list.delete()
+        HttpResponseRedirect(reverse('fruits_shop:index'))

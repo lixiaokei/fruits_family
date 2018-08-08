@@ -118,6 +118,14 @@ class AddressModel(models.Model):
         self.save()
 
 
+class DistribModel(models.Model):
+    name = models.CharField(max_length=255)
+    img = models.ImageField(upload_to='distrib')
+
+    class Meta:
+        db_table = 'tb_distrib'
+
+
 # 订单
 class OrderModel(models.Model):
     user = models.ForeignKey(UserModel)  # 关联用户
@@ -130,6 +138,7 @@ class OrderModel(models.Model):
     name = models.CharField(max_length=20, default='')                  # 收货人姓名
     tel_phone = models.CharField(max_length=13, default='')  # 收货人电话
     total_price = models.CharField(max_length=10)   # 订单金额
+    distrib = models.ForeignKey(DistribModel, null=True)
 
     class Meta:
         db_table = 'tb_order'

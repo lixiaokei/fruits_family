@@ -15,6 +15,10 @@
     {% logo as img %}
 		<a href="{% url 'fruits_shop:index' %}" class="logo fl"><img src="/media/{{ img }}"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;确认支付</div>
+        <div class="guest_cart fr">
+			<a href="{% url 'fruits_shop:cart' %}" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">0</div>
+		</div>
 	</div>
     <h3 class="common_title">支付方式</h3>
 	<div class="common_list_con clearfix">
@@ -45,11 +49,12 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'fruits_shop/js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fruits_shop/js/cart.js' %}"></script>
 	<script type="text/javascript">
+    get_cart_count(show)
 		$('#order_btn').click(function(evt) {
 		    var evt = $(evt.target)
-			localStorage.setItem('order_finish',2);
-
+			localStorage.setItem('order_finish', 2);
 			$('.popup_con').fadeIn('fast', function() {
 
 				setTimeout(function(){

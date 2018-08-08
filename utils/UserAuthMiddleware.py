@@ -3,11 +3,10 @@ import re
 
 from django.utils.deprecation import MiddlewareMixin
 from django.http import HttpResponseRedirect
-from django.contrib.sessions.models import Session
-from django.contrib.auth.models import User
 from user.models import UserTicketModel
 from django.core.urlresolvers import reverse
 
+from utils.conf import USER_MUST_LOGIN_PATH, USER_PATH_PASS
 
 # 定义后台页面中间件验证
 class BackWebMiddleware(MiddlewareMixin):
@@ -30,20 +29,8 @@ class BackWebMiddleware(MiddlewareMixin):
 class UserMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
-        path1 = ['/fruits_shop/index/', '/fruits_shop/detail/',
-                 '/fruits_shop/add_cart/', '/fruits_shop/get_cart_count/',
-                 '/fruits_shop/cart/', '/fruits_shop/subtotal/',
-                 '/fruits_shop/total_price/', '/fruits_shop/change_num/',
-                 '/fruits_shop/cart_delete/', '/fruits_shop/change_status/',
-                 '/user/user_center_info/', '/user/show_address/',
-                 '/user/add_address/', '/user/edit_address',
-                 '/fruits_shop/make_order/', '/fruits_shop/order_pay/',
-                 '/user/user_order_info/']
-        path2 = ['/user/user_center_info/', '/user/show_address/',
-                 '/user/add_address/', '/user/edit_address/',
-                 '/user/user_order_info/']
         now_time = datetime.datetime.now()
-        if request.path in path1:
+        if request.path in USER_PATH_PASS:
             session_value = request.COOKIES.get('session_id')
             # 判断session是否有值
             if session_value:
@@ -57,11 +44,11 @@ class UserMiddleware(MiddlewareMixin):
                         session.delete()
                         return None
                 else:
-                    if request.path in path2:
+                    if request.path in USER_MUST_LOGIN_PATH:
                         return HttpResponseRedirect(reverse('user:login'))
                     return None
             else:
-                if request.path in path2:
+                if request.path in USER_MUST_LOGIN_PATH:
                     return HttpResponseRedirect(reverse('user:login'))
                 return None
         return None

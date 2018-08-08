@@ -50,4 +50,7 @@ urlpatterns = [
     # 显示运费设置
     url(r'^show_freight/', views.show_freight, name='show_freight'),
 
+    # 后台订单显示
+    url(r'^show_order/', views.show_order, name='show_order'),
+
 ]

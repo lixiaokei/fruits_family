@@ -16,6 +16,15 @@ def get_sum(value, arg):
     return float(value) + float(arg)
 
 
+# 比较过滤器
+@register.filter(name='equal')
+def com_equal(value, arg):
+        if value == arg:
+            return True
+        else:
+            return False
+
+
 # 获取地址列表
 @register.assignment_tag(name='logo')
 def get_logo():

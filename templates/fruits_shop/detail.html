@@ -16,7 +16,7 @@
 		</div>
 		<div class="guest_cart fr">
 			<a href="{% url 'fruits_shop:cart' %}" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count"></div>
+			<div class="goods_count fl" id="show_count">0</div>
 		</div>
 	</div>
 
@@ -117,6 +117,7 @@
 {% block js %}
 
 	<script type="text/javascript" src="{% static 'fruits_shop/js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fruits_shop/js/cart.js' %}"></script>
 	<script type="text/javascript">
         $(function () {
             // 滑动 -- 添加购物车
@@ -170,19 +171,6 @@
             // 初始化显示购物车
             get_cart_count(show)
         });
-        // 把ajax请求的相应传入另一个函数中，由另一个函数处理展示
-        function show(data) {
-            if (data.count){
-                $('#show_count').html(data.count);
-            }
 
-        }
-        function get_cart_count(func) {
-            $.get('/fruits_shop/get_cart_count/', function (json) {
-                if (json.code == 200){
-                    func(json)
-                }
-            });
-        }
 	</script>
 {% endblock %}

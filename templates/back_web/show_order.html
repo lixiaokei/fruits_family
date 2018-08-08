@@ -1,0 +1,149 @@
+{% extends 'back_web/base.html' %}
+{% load static %}
+{% load lk_filter %}
+{% block css %}
+    {{ block.super }}
+    <style>
+        .dataStatistic{width:400px;height:200px;border:1px solid #ccc;
+            margin:0 auto;margin:10px;overflow:hidden}
+        #cylindrical{width:400px;height:200px;margin-top:-15px}
+        #line{width:400px;height:200px;margin-top:-15px}
+        #pie{width:400px;height:200px;margin-top:-15px}
+</style>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script>
+	(function($){
+		$(window).load(function(){
+
+			$("a[rel='load-content']").click(function(e){
+				e.preventDefault();
+				var url=$(this).attr("href");
+				$.get(url,function(data){
+					$(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+					//scroll-to appended content
+					$(".content").mCustomScrollbar("scrollTo","h2:last");
+				});
+			});
+
+			$(".content").delegate("a[href='top']","click",function(e){
+				e.preventDefault();
+				$(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
+			});
+		});
+	})(jQuery);
+	function status_filter() {
+	    var status = $(event.target).val();
+        location.href = '/back_web/show_order/?order_status=' + status
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+    <section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">订单列表</h2>
+      </div>
+      <section class="mtb">
+       <select class="select" onchange="status_filter()">
+           {% for k in status_list %}
+                {% if k == 'all' %}
+               <option value='{{ k }}'{% ifequal k order_status %} selected {% endifequal %}>全部订单</option>
+                {% elif k == '0' %}
+               <option value='{{ k }}'{% ifequal k order_status %} selected {% endifequal %}>待付款</option>
+                {% elif k == '1' %}
+               <option value='{{ k }}'{% ifequal k order_status %} selected {% endifequal %}>已付款</option>
+                {% elif k == '2' %}
+               <option value='{{ k }}'{% ifequal k order_status %} selected {% endifequal %}>已发货</option>
+                {% elif k == '3' %}
+               <option value='{{ k }}'{% ifequal k order_status %} selected {% endifequal %}>已完成</option>
+                {% elif k == '4' %}
+               <option value='{{ k }}'{% ifequal k order_status %} selected {% endifequal %}>已取消</option>
+               {% endif %}
+
+           {% endfor %}
+       </select>
+       <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..."/>
+       <input type="button" value="查询" class="group_btn"/>
+      </section>
+      <table class="table">
+       <tr>
+           <th>序号</th>
+           <th>订单编号</th>
+           <th>收件人</th>
+           <th>联系电话</th>
+           <th>收货地址</th>
+           <th>订单金额</th>
+           <th>订单状态</th>
+           <th>配送方式</th>
+           <th>操作</th>
+       </tr>
+          <!-- 处理显示商品信息 -->
+          {% for order in order_list %}
+       <tr>
+           <td class="center">{{ forloop.counter }}</td>
+           <td class="center">{{ order.o_num }}</td>
+           <td class="center">{{ order.name }}</td>
+           <td class="center">{{ order.tel_phone }}</td>
+           <td class="center">{{ order.address }}</td>
+           <td class="center"><strong class="rmb_icon">{{ order.total_price }}</strong></td>
+           <td class="center">
+               {% if order.o_status == 0 %}
+                    代付款
+               {% elif order.o_status == 1 %}
+                   已付款
+               {% elif order.o_status == 2 %}
+                   已发货
+               {% elif order.o_status == 3 %}
+                   已完成
+               {% elif order.o_status == 4 %}
+                   已取消
+               {% endif %}
+
+           </td>
+           <td class="center">
+               {% if order.distrib.name %}
+                   {{ good.group.name }}
+                   {% else %}
+                   未选择
+               {% endif %}
+           </td>
+        <td class="center">
+         <a href="{% url 'back_web:edit_good' %}?good_id={{ good.id }}" title="编辑" class="link_icon">&#101;</a>
+        </td>
+       </tr>
+          {% endfor %}
+          <!-- 处理结束 -->
+      </table>
+      <aside class="paging">
+          <!-- 处理页码 -->
+       <a href="{% url 'back_web:show_order' %}?order_status={{ order_status }}">首页</a>
+          {% if order_list.has_previous %}
+              <a href="{% url 'back_web:show_order' %}
+              ?page={{ order_list.previous_page_number }}
+              &order_status={{ order_status }}">上一页</a>
+          {% endif %}
+            {% for tmp in order_list.paginator.page_range %}
+                {% ifequal tmp page %}
+            <a href="{% url 'back_web:show_order' %}?page={{ tmp }}&order_status={{ order_status }}"
+                style="color: red;background-color: white">{{ tmp }}</a>
+                {% else %}
+            <a href="{% url 'back_web:show_order' %}?page={{ tmp }}&order_status={{ order_status }}"
+                >{{ tmp }}</a>
+                {% endifequal %}
+          {% endfor %}
+        {% if order_list.has_next %}
+              <a href="{% url 'back_web:show_order' %}
+              ?page={{ order_list.next_page_number }}
+              &order_status={{ order_status }}">下一页</a>
+          {% endif %}
+       <a href="{% url 'back_web:show_order' %}
+       ?page={{ order_list.paginator.num_pages }}
+       &order_status={{ order_status }}">尾页</a>
+      </aside>
+ </div>
+</section>
+{% endblock %}

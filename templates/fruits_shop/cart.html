@@ -11,6 +11,10 @@
 	<div class="search_bar clearfix">
 		<a href="{% url 'fruits_shop:index' %}" class="logo fl"><img src="/media/{{ logo.img }}"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
+        <div class="guest_cart fr">
+			<a href="{% url 'fruits_shop:cart' %}" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">0</div>
+		</div>
 	</div>
     <div style="color: red;text-align: center">{{ msg }}</div>
 	<div class="total_count">全部商品<em></em>件</div>
@@ -61,4 +65,42 @@
 {% block js %}
 	<script type="text/javascript" src="{% static 'fruits_shop/js/jquery-1.12.4.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'fruits_shop/js/cart.js' %}"></script>
+    <script type="text/javascript">
+    $(function () {
+    Subtotal();
+    total_price();
+    // 加减点击事件
+    $('.change').click(function (e) {
+        e.preventDefault();
+        var evt = $(e.target);
+        var good_id = evt.parent().attr('name');
+        var value = evt.parent().find('input').val();
+        if (evt.text() == '+'){
+            var change_type = 1
+        }else if (evt.text() == '-'){
+            var change_type = 0
+        }
+        var data = {'good_id': good_id, 'value': value, 'change_type': change_type};
+        $.get('/fruits_shop/change_num/', data, function (data) {
+            if (data.code == 200){
+                evt.parent().parent().nextAll('.subtotal').text(data.total + '元');
+                evt.parent().find('input').val(data.value);
+                total_price();
+                }
+        })
+    });
+    // 勾选按钮点击事件
+    $('.cart_list_td>.col01>input').click(function (evt) {
+        var check_status = $(evt.target).prop('checked');
+        var cart_id = $(evt.target).attr('name');
+        change_status(cart_id, check_status, '', false);
+    })
+    // 全选按钮点击事件
+    $('.settlements>.col01>input').click(function (evt) {
+        var all_value = $(evt.target).prop('checked');
+        var all_change_status = true;
+        change_status('', '', all_value, all_change_status)
+    })
+});
+    </script>
 {% endblock %}

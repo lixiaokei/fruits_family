@@ -1,4 +1,5 @@
 {% extends 'fruits_shop/base.html' %}
+{% load static %}
 {% load lk_filter %}
 {% block title %}
 天天生鲜-用户中心
@@ -21,6 +22,10 @@
     {% logo as img %}
 		<a href="{% url 'fruits_shop:index' %}" class="logo fl"><img src="/media/{{ img }}"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+        <div class="guest_cart fr">
+			<a href="{% url 'fruits_shop:cart' %}" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">0</div>
+		</div>
 	</div>
 
 	<div class="main_con clearfix">
@@ -61,6 +66,9 @@
 	</div>
 {% endblock %}
 {% block js %}
-{{ block.super }}
+<script type="text/javascript" src="{% static 'fruits_shop/js/cart.js' %}"></script>
+    <script type="text/javascript">
+     get_cart_count(show)
+    </script>
 
 {% endblock %}
