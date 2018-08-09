@@ -2,6 +2,7 @@ asn1crypto==0.24.0
 cffi==1.11.5
 cryptography==2.3
 Django==1.11
+django-crispy-forms==1.7.2
 idna==2.7
 Pillow==5.2.0
 pycparser==2.18

@@ -1,6 +1,6 @@
 from django import template
 
-from back_web.models import StaticModel, FreightModel
+from back_web.models import StaticModel, FreightModel, GroupModel
 register = template.Library()
 
 
@@ -24,6 +24,14 @@ def com_equal(value, arg):
         else:
             return False
 
+
+# 获取指定分组的的商品信息
+@register.filter(name='list')
+def get_good_list(group_id):
+    group = GroupModel.objects.filter(pk=group_id).first()
+    if group:
+        good_list = group.goodsmodel_set.all().order_by('-id')[0:4]
+        return good_list
 
 # 获取地址列表
 @register.assignment_tag(name='logo')
