@@ -118,6 +118,7 @@ class AddressModel(models.Model):
         self.save()
 
 
+# 配送方式
 class DistribModel(models.Model):
     name = models.CharField(max_length=255)
     img = models.ImageField(upload_to='distrib')

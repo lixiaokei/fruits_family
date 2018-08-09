@@ -53,4 +53,11 @@ urlpatterns = [
     # 后台订单显示
     url(r'^show_order/', views.show_order, name='show_order'),
 
+    # 显示配送方式
+    url(r'^show_distrib/', views.show_distrib, name='show_distrib'),
+    # 添加配送方式
+    url(r'^add_distrib/', views.add_distrib, name='add_distrib'),
+    # 删除url
+    url(r'^del_distrib/', views.del_distrib, name='del_distrib'),
+
 ]

@@ -14,7 +14,6 @@ def show_order(request):
             orders = OrderModel.objects.filter(o_status=order_status)
         paginator = Paginator(orders, 5)
         order_list = paginator.page(page)
-
         data = {
             'order_list': order_list,
             'page': page,
