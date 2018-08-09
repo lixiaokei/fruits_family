@@ -16,7 +16,7 @@
     <script>
 	(function($){
 		$(window).load(function(){
-
+            $($('.lt_aside_nav ul a')[5]).attr('class', 'active');
 			$("a[rel='load-content']").click(function(e){
 				e.preventDefault();
 				var url=$(this).attr("href");

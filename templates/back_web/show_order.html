@@ -17,7 +17,7 @@
     <script>
 	(function($){
 		$(window).load(function(){
-
+            $($('.lt_aside_nav ul a')[4]).attr('class', 'active');
 			$("a[rel='load-content']").click(function(e){
 				e.preventDefault();
 				var url=$(this).attr("href");
@@ -106,13 +106,13 @@
            </td>
            <td class="center">
                {% if order.distrib.name %}
-                   {{ good.group.name }}
+                   {{ order.distrib.name }}
                    {% else %}
                    未选择
                {% endif %}
            </td>
         <td class="center">
-         <a href="{% url 'back_web:edit_good' %}?good_id={{ good.id }}" title="编辑" class="link_icon">&#101;</a>
+         <a href="{% url 'back_web:edit_order' %}?order_id={{ order.id }}" title="编辑" class="link_icon">&#101;</a>
         </td>
        </tr>
           {% endfor %}

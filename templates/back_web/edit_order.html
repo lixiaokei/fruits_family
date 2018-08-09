@@ -16,7 +16,7 @@
     <script>
 	(function($){
 		$(window).load(function(){
-            $($('.lt_aside_nav ul a')[5]).attr('class', 'active');
+            $($('.lt_aside_nav ul a')[4]).attr('class', 'active');
 			$("a[rel='load-content']").click(function(e){
 				e.preventDefault();
 				var url=$(this).attr("href");
@@ -41,23 +41,27 @@
     <section class="rt_wrap content mCustomScrollbar">
     <div class="rt_content">
       <div class="page_title">
-       <h2 class="fl">运费管理</h2>
-       <a class="fr top_rt_btn" href="{% url 'back_web:show_banner' %}">返回运费信息</a>
+       <h2 class="fl">订单管理</h2>
+       <a class="fr top_rt_btn" href="{% url 'back_web:show_order' %}">返回订单列表</a>
       </div>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <section>
           <ul class="ulColumn2">
            <li>
-            <span class="item_name" style="width:120px;">区域地址：</span>
-            <input type="text" class="textbox textbox_295" value="{{ freight.name }}"
-                   placeholder="区域地址..."
-                   name="address"/>
+            <span class="item_name" style="width:120px;">订单编号：</span>
+            <input type="text" class="textbox textbox_295" value="{{ orders.o_num }}"
+                   placeholder="订单编号..."
+                   name="o_num"/>
             <span class="errorTips">{{ msg }}</span>
            </li>
            <li>
-            <span class="item_name" style="width:120px;">运费：</span>
-                <input type="text" name="freight" class="textbox"/>
+            <span class="item_name" style="width:120px;">配送方式：</span>
+               <select name="distrib_id" id="">
+                   {% for distrib in distribs %}
+                   <option value="{{ distrib.id }}">{{ distrib.name }}</option>
+                   {% endfor %}
+               </select>
            </li>
            <li>
             <span class="item_name" style="width:120px;"></span>

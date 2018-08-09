@@ -33,7 +33,7 @@
                 <dl>
                     <dt>商品信息管理</dt>
                     <!--当前链接则添加class:active-->
-                    <dd><a href="{% url 'back_web:index' %}" class="active">商品列表</a></dd>
+                    <dd><a href="{% url 'back_web:index' %}">商品列表</a></dd>
                     <!--<dd><a href="{% url 'back_web:add_goods' %}">商品添加</a></dd>-->
                     <dd><a href="{% url 'back_web:show_group' %}">分组管理</a></dd>
                     <!--<dd><a href="{% url 'back_web:add_group' %}">分组添加</a></dd>-->
@@ -45,28 +45,20 @@
                 <dl>
                     <dt>订单信息</dt>
                     <dd><a href="{% url 'back_web:show_order' %}">订单列表管理</a></dd>
-                    <dd><a href="../notuse/order_detail.html">订单详情示例</a></dd>
                     <dd><a href="{% url 'back_web:show_freight' %}">运费管理</a></dd>
                </dl>
             </li>
             <li>
                 <dl>
-                    <dt>会员管理</dt>
-                    <dd><a href="../notuse/user_list.html">会员列表示例</a></dd>
-                    <dd><a href="../notuse/user_detail.html">添加会员（详情）示例</a></dd>
-                </dl>
-            </li>
-            <li>
-                <dl>
-                    <dt>配送与支付设置</dt>
+                    <dt>配送设置</dt>
                     <dd><a href="{% url 'back_web:show_distrib' %}">配送方式</a></dd>
-                    <dd><a href="../notuse/pay_list.html">支付方式</a></dd>
+                    <!--<dd><a href="../notuse/pay_list.html">支付方式</a></dd>-->
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>在线统计</dt>
-                    <dd><a href="../notuse/discharge_statistic.html">流量统计</a></dd>
+                    <dd><a href="javascript:void(0);">流量统计</a></dd>
                     <!--<dd><a href="sales_volume.html">销售额统计</a></dd>-->
                 </dl>
             </li>
